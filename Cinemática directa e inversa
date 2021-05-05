@@ -1,4 +1,4 @@
-% Programa que describe la cinemática directa e inversa de un robot manipulador
+% Programa que describe la cinemática directa e inversa de un robot manipulador  (En Matlab)
 clear all;
 clc;
 r=.5
