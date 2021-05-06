@@ -1,0 +1,36 @@
+% Segundo ejemplo sobre la simulación de la cinemática directa e inversa de un robot manipulador
+clear all;
+clc;
+r=.5
+x=(-r: 0.01: r)
+y=sqrt(r^2-x.^2)
+y1=-sqrt(r^2-x.^2)
+xt=[x -x]+1
+yt=[y y1]+1
+plot(xt,yt);
+q=[0,0,0,0];
+L{1} = link ([0 0 q(1) 0.4 0]);
+L{2} = link ([-pi/2 -0.1 0 q(2) 1]);
+L{3} = link ([0 0 0 q(3) 1]);
+L{4} = link ([0 0 q(4) 0.2 0]);
+mirobot = robot(L)
+plot(mirobot,q)
+M=[1 1 1 1 0 0];
+T=[1 0 0 xt(1)
+ 0 1 0 yt(1)
+ 0 0 1 0
+ 0 0 0 1];
+q1=ikine(mirobot,T,q,M)
+Q=q1;
+for i=2:length(xt)
+
+ T=[1 0 0 xt(i)
+ 0 1 0 yt(i)
+ 0 0 1 0
+ 0 0 0 1];
+
+q1=ikine(mirobot,T,q1,M);
+Q=[Q; q1];
+end
+
+plot(mirobot,Q)
